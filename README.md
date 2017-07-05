@@ -46,7 +46,8 @@ Optional arguments are listed below. To access any of them, you must use the syn
 Slider.new(self, 30, 30, 0, 200, 100, markers: 3)
 ```
 creates
-<img src="markers.png" width="300">
+![Alt text](markers.png?raw=true)
+<!-- <img src="markers.png" width="48"> -->
 - color - The `Gosu::Color` of the bar, selector, and text.
 - text - Determines whether or not to display text.
 - scale - The scale of the entire slider. Warning! Scaling up may require modifying the length, otherwise the text may get crowded.
