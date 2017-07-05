@@ -29,6 +29,21 @@ require 'gosui'
 
 For each input device in the game, you must first create it using the instructions provided individually. Next, each device must call `update` and `draw` in your window's `update` and `draw` methods.
 
+### Button
+
+The button is the easiest and most basic input device in Gosui. Buttons are created with
+`Button.new()`
+The arguments are
+- window - The current game window.
+- x, y - The x and y coordinates of the button.
+- z - The layer on which the button is displayed.
+- callback - The method called when the button is pressed. Syntax `self.method(:[METHOD_NAME])`
+- width, height - The width and height of the button.
+- label - The text displayed on the button.
+- font_size - The font size of the label. Default is 20.
+- down_color, up_color - The `Gosu::Color` of the button when the button is pressed down or up respectively.
+- text_color - The `Gosu::Color` of the text.
+
 ### Slider
 
 The slider is an important piece of functionality in Gosui. To create one, use
@@ -36,6 +51,7 @@ The slider is an important piece of functionality in Gosui. To create one, use
 The arguments are
 - window - The current game window.
 - x, y - The x and y coordinates of the slider. Exact position is at the top-left corner of the bar itself.
+- z - The layer on which the slider is displayed.
 - length - The display length of the slider.
 - max - The value when the selector is all the way to the right.
 Optional arguments are listed below. To access any of them, you must use the syntax `[argument]: [value]`
