@@ -38,6 +38,8 @@ The arguments are
 - x, y - The x and y coordinates of the button.
 - z - The layer on which the button is displayed.
 - callback - The method called when the button is pressed. Syntax `self.method(:[METHOD_NAME])`
+
+Optional arguments are listed below. To access any of them, you must use the syntax `[argument]: [value]`
 - width, height - The width and height of the button.
 - label - The text displayed on the button.
 - font_size - The font size of the label. Default is 20.
@@ -54,6 +56,7 @@ The arguments are
 - z - The layer on which the slider is displayed.
 - length - The display length of the slider.
 - max - The value when the selector is all the way to the right.
+
 Optional arguments are listed below. To access any of them, you must use the syntax `[argument]: [value]`
 - min - The value when the selector is all the way to the left.
 - value - The initial value of the selector, ranging from your minimum value to your maximum value.
