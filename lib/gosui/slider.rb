@@ -11,12 +11,11 @@ module Gosui
 
     C = Gosu::Color.rgb(128, 128, 128)
 
-    def initialize(window, x, y, z, length, max, min: 0, pos: 0.0, markers: 0, color: C, text: true, scale: 1, label: nil)
+    def initialize(window, x, y, z, length, max, min: 0, value: 0, markers: 0, color: C, text: true, scale: 1, label: nil)
       @win = window
       @x, @y, @z = x, y, z
       @l = length
       @max, @min = max, min
-      @pos = pos / 100.0
       @markers = markers
       @col = color
       @text = text
@@ -30,12 +29,18 @@ module Gosui
       @lheight = LHEIGHT * scale
       @font_size = FONT_SIZE * scale
 
+      if value == 0
+        @pos = 0.0
+      else
+        @pos = (value.to_f - @min) / (@max - @min)
+      end
+      puts "Position: #{@pos}"
+      @dragging = false
       @dragging = false
       @font = Gosu::Font.new(@font_size, {name: 'slider_font'})
       @selectorx = @x + @pos * @l - PWIDTH / 2
       @selectory = @y + @margin + @lheight
       @dir = 'up'
-      @dragging = false
     end
 
     def value(pos = @pos)
