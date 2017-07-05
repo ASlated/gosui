@@ -1,5 +1,5 @@
 module Gosui
-  class SliderAlt
+  class Slider
 
     PWIDTH = 20
     QHEIGHT = 15
