@@ -1,17 +1,17 @@
 module Gosui
   class Slider
 
-    PWIDTH = 20
-    QHEIGHT = 15
-    THEIGHT = 10
-    PHEIGHT = QHEIGHT + THEIGHT
-    MARGIN = 5
-    LHEIGHT = 5
+    PWIDTH = 20 * @scale
+    QHEIGHT = 15 * @scale
+    THEIGHT = 10 * @scale
+    PHEIGHT = (QHEIGHT + THEIGHT) * @scale
+    MARGIN = 5 * @scale
+    LHEIGHT = 5 * @scale
 
     C = Gosu::Color.rgb(128, 128, 128)
-    FONT_SIZE = 20
+    FONT_SIZE = 20 * @scale
 
-    def initialize(window, x, y, z, length, max, min: 0, pos: 0.0, markers: 0, color: C, text: true)
+    def initialize(window, x, y, z, length, max, min: 0, pos: 0.0, markers: 0, color: C, text: true, scale: 1, label: nil)
       @win = window
       @x, @y, @z = x, y, z
       @l = length
@@ -20,6 +20,8 @@ module Gosui
       @markers = markers
       @col = color
       @text = text
+      @scale = scale
+      @label = label
       @dragging = false
       @font = Gosu::Font.new(FONT_SIZE, {name: 'slider_font'})
       @selectorx = @x + @pos * @l - PWIDTH / 2
@@ -89,6 +91,7 @@ module Gosui
       @font.draw(min.round, @x, @y + LHEIGHT + MARGIN, @z, 1, 1, @col)
       @font.draw_rel(max.round, @x + @l, @y + LHEIGHT + MARGIN, @z, 1, 0, 1, 1, @col)
       @font.draw_rel(value.round, @x + @l, @y - MARGIN - QHEIGHT, @z, 1, 1, 1, 1, @col)
+      @font.draw_rel(@label, @x, @y - MARGIN - QHEIGHT, @z, 0, 1, 1, 1, @col)
     end
 
     def draw
