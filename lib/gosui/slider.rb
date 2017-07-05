@@ -11,7 +11,7 @@ module Gosui
 
     C = Gosu::Color.rgb(128, 128, 128)
 
-    def initialize(window, x, y, z, length, max, min: 0, pos: 0.0, markers: 0, color: C, text: true, scale: 1, name: nil)
+    def initialize(window, x, y, z, length, max, min: 0, pos: 0.0, markers: 0, color: C, text: true, scale: 1, label: nil)
       @win = window
       @x, @y, @z = x, y, z
       @l = length
@@ -20,7 +20,7 @@ module Gosui
       @markers = markers
       @col = color
       @text = text
-      @name = name
+      @label = label
 
       @pwidth = PWIDTH * scale
       @qheight = QHEIGHT * scale
@@ -99,7 +99,7 @@ module Gosui
       @font.draw(min.round, @x, @y + @lheight + @margin, @z, 1, 1, @col)
       @font.draw_rel(max.round, @x + @l, @y + @lheight + @margin, @z, 1, 0, 1, 1, @col)
       @font.draw_rel(value.round, @x + @l, @y - @margin - @qheight, @z, 1, 1, 1, 1, @col)
-      @font.draw_rel(@name, @x, @y - @margin - @qheight, @z, 0, 1, 1, 1, @col)
+      @font.draw_rel(@label, @x, @y - @margin - @qheight, @z, 0, 1, 1, 1, @col)
     end
 
     def draw
