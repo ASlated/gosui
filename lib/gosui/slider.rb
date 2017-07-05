@@ -11,7 +11,8 @@ module Gosui
 
     C = Gosu::Color.rgb(128, 128, 128)
 
-    def initialize(window, x, y, z, length, max, min: 0, value: 0, markers: 0, color: C, text: true, scale: 1, label: nil)
+    attr_reader :max, :min
+    def initialize(window, x, y, z, length, max, min: 0, value: 0, markers: 0, color: C, text: true, scale: 1, label: nil, percentage: false)
       @win = window
       @x, @y, @z = x, y, z
       @l = length
@@ -20,6 +21,7 @@ module Gosui
       @col = color
       @text = text
       @label = label
+      @percentage = percentage
 
       @pwidth = PWIDTH * scale
       @qheight = QHEIGHT * scale
@@ -34,21 +36,16 @@ module Gosui
       else
         @pos = (value.to_f - @min) / (@max - @min)
       end
-      puts "Position: #{@pos}"
       @dragging = false
       @dragging = false
       @font = Gosu::Font.new(@font_size, {name: 'slider_font'})
       @selectorx = @x + @pos * @l - PWIDTH / 2
       @selectory = @y + @margin + @lheight
-      @dir = 'up'
     end
 
     def value(pos = @pos)
       (@max - @min) * pos + @min
     end
-
-    def max; @max; end
-    def min; @min; end
 
     def check_clicking
       if @win.button_down?(Gosu::MsLeft)
@@ -103,7 +100,11 @@ module Gosui
     def draw_text
       @font.draw(min.round, @x, @y + @lheight + @margin, @z, 1, 1, @col)
       @font.draw_rel(max.round, @x + @l, @y + @lheight + @margin, @z, 1, 0, 1, 1, @col)
-      @font.draw_rel(value.round, @x + @l, @y - @margin - @qheight, @z, 1, 1, 1, 1, @col)
+      if @percentage
+        @font.draw_rel("#{value.round}%", @x + @l, @y - @margin - @qheight, @z, 1, 1, 1, 1, @col)
+      else
+        @font.draw_rel(value.round, @x + @l, @y - @margin - @qheight, @z, 1, 1, 1, 1, @col)
+      end
       @font.draw_rel(@label, @x, @y - @margin - @qheight, @z, 0, 1, 1, 1, @col)
     end
 

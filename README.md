@@ -53,6 +53,7 @@ creates
 - text - Determines whether or not to display text.
 - scale - The scale of the entire slider. Warning! Scaling up may require modifying the length, otherwise the text may get crowded.
 - label - A label for your slider. Appears on the top-left corner.
+- percentage - Puts a percentage sign (%) to the right of the displayed value.
 
 ## Development
 
