@@ -1,15 +1,15 @@
 module Gosui
   class Slider
 
-    PWIDTH = 20 * @scale
-    QHEIGHT = 15 * @scale
-    THEIGHT = 10 * @scale
-    PHEIGHT = (QHEIGHT + THEIGHT) * @scale
-    MARGIN = 5 * @scale
-    LHEIGHT = 5 * @scale
+    PWIDTH = 20
+    QHEIGHT = 15
+    THEIGHT = 10
+    PHEIGHT = QHEIGHT + THEIGHT
+    MARGIN = 5
+    LHEIGHT = 5
+    FONT_SIZE = 20
 
     C = Gosu::Color.rgb(128, 128, 128)
-    FONT_SIZE = 20 * @scale
 
     def initialize(window, x, y, z, length, max, min: 0, pos: 0.0, markers: 0, color: C, text: true, scale: 1, label: nil)
       @win = window
@@ -20,12 +20,20 @@ module Gosui
       @markers = markers
       @col = color
       @text = text
-      @scale = scale
       @label = label
+
+      @pwidth = PWIDTH * scale
+      @qheight = QHEIGHT * scale
+      @theight = THEIGHT * scale
+      @pheight = PHEIGHT * scale
+      @margin = MARGIN * scale
+      @lheight = LHEIGHT * scale
+      @font_size = FONT_SIZE * scale
+
       @dragging = false
-      @font = Gosu::Font.new(FONT_SIZE, {name: 'slider_font'})
+      @font = Gosu::Font.new(@font_size, {name: 'slider_font'})
       @selectorx = @x + @pos * @l - PWIDTH / 2
-      @selectory = @y + MARGIN + LHEIGHT
+      @selectory = @y + @margin + @lheight
       @dir = 'up'
       @dragging = false
     end
@@ -39,7 +47,7 @@ module Gosui
 
     def check_clicking
       if @win.button_down?(Gosu::MsLeft)
-        if !@already_down && check_mouse(@win.mouse_x, @win.mouse_y, @selectorx, @selectory - PHEIGHT, @selectorx + PWIDTH, @selectory)
+        if !@already_down && check_mouse(@win.mouse_x, @win.mouse_y, @selectorx, @selectory - @pheight, @selectorx + @pwidth, @selectory)
           @dragging = true
         else
           @already_down = true
@@ -63,35 +71,35 @@ module Gosui
     def update
       check_clicking
       drag if @dragging
-      @selectorx = @x + @pos * @l - PWIDTH / 2
-      @selectory = @y + MARGIN + LHEIGHT
+      @selectorx = @x + @pos * @l - @pwidth / 2
+      @selectory = @y + @margin + @lheight
     end
 
     def draw_pointer
       x, y = @selectorx, @selectory
-      @win.draw_quad(x, y - PHEIGHT, @col, x + PWIDTH, y - PHEIGHT, @col, x, y - THEIGHT, @col, x + PWIDTH, y - THEIGHT, @col, @z)
-      @win.draw_triangle(x, y - THEIGHT, @col, x + PWIDTH / 2, y, @col, x + PWIDTH, y - THEIGHT, @col, @z)
+      @win.draw_quad(x, y - @pheight, @col, x + @pwidth, y - @pheight, @col, x, y - @theight, @col, x + @pwidth, y - @theight, @col, @z)
+      @win.draw_triangle(x, y - @theight, @col, x + @pwidth / 2, y, @col, x + @pwidth, y - @theight, @col, @z)
     end
 
     def draw_bar
-      @win.draw_quad(@x, @y, @col, @x + @l, @y, @col, @x, @y + LHEIGHT, @col, @x + @l, @y + LHEIGHT, @col, @z)
-      @win.draw_quad(@x, @y - LHEIGHT, @col, @x + LHEIGHT, @y - LHEIGHT, @col, @x, @y, @col, @x + LHEIGHT, @y, @col, @z)
-      @win.draw_quad(@x + @l - LHEIGHT, @y - LHEIGHT, @col, @x + @l, @y - LHEIGHT, @col, @x + @l - LHEIGHT, @y, @col, @x + @l, @y, @col, @z)
+      @win.draw_quad(@x, @y, @col, @x + @l, @y, @col, @x, @y + @lheight, @col, @x + @l, @y + @lheight, @col, @z)
+      @win.draw_quad(@x, @y - @lheight, @col, @x + @lheight, @y - @lheight, @col, @x, @y, @col, @x + @lheight, @y, @col, @z)
+      @win.draw_quad(@x + @l - @lheight, @y - @lheight, @col, @x + @l, @y - @lheight, @col, @x + @l - @lheight, @y, @col, @x + @l, @y, @col, @z)
     end
 
     def draw_markers
       @markers.times do |i|
         pos = (i + 1).to_f / (@markers + 1).to_f
-        @win.draw_quad(pos * @l + @x - 0.5 * LHEIGHT, @y - LHEIGHT, @col, pos * @l + @x + 0.5 * LHEIGHT, @y - LHEIGHT, @col, pos * @l + @x - 0.5 * LHEIGHT, @y, @col, pos * @l + @x + 0.5 * LHEIGHT, @y, @col, @z)
-        @font.draw_rel(value(pos).round, pos * @l + @x, @y + LHEIGHT + MARGIN, @z, 0.5, 0, 1, 1, @col) if @text
+        @win.draw_quad(pos * @l + @x - 0.5 * @lheight, @y - @lheight, @col, pos * @l + @x + 0.5 * @lheight, @y - @lheight, @col, pos * @l + @x - 0.5 * @lheight, @y, @col, pos * @l + @x + 0.5 * @lheight, @y, @col, @z)
+        @font.draw_rel(value(pos).round, pos * @l + @x, @y + @lheight + @margin, @z, 0.5, 0, 1, 1, @col) if @text
       end
     end
 
     def draw_text
-      @font.draw(min.round, @x, @y + LHEIGHT + MARGIN, @z, 1, 1, @col)
-      @font.draw_rel(max.round, @x + @l, @y + LHEIGHT + MARGIN, @z, 1, 0, 1, 1, @col)
-      @font.draw_rel(value.round, @x + @l, @y - MARGIN - QHEIGHT, @z, 1, 1, 1, 1, @col)
-      @font.draw_rel(@label, @x, @y - MARGIN - QHEIGHT, @z, 0, 1, 1, 1, @col)
+      @font.draw(min.round, @x, @y + @lheight + @margin, @z, 1, 1, @col)
+      @font.draw_rel(max.round, @x + @l, @y + @lheight + @margin, @z, 1, 0, 1, 1, @col)
+      @font.draw_rel(value.round, @x + @l, @y - @margin - @qheight, @z, 1, 1, 1, 1, @col)
+      @font.draw_rel(@label, @x, @y - @margin - @qheight, @z, 0, 1, 1, 1, @col)
     end
 
     def draw
