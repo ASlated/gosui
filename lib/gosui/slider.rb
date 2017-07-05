@@ -16,7 +16,7 @@ module Gosui
       @x, @y, @z = x, y, z
       @l = length
       @max, @min = max, min
-      @pos = pos.to_f
+      @pos = pos / 100.0
       @markers = markers
       @col = color
       @text = text
