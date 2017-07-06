@@ -12,7 +12,7 @@ module Gosui
     def initialize(window, x, y, z, callback, width: WIDTH, height: HEIGHT, label: nil, font_size: FONT_SIZE, down_color: DOWN_COL, up_color: UP_COL, text_color: TEXT_COL)
       @win = window
       @x, @y, @z = x, y, z
-      @callback = callback
+      @callback = @win.method(callback)
       @label = label
 
       @width, @height = width, height
