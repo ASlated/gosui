@@ -37,7 +37,7 @@ The arguments are
 - window - The current game window.
 - x, y - The x and y coordinates of the button.
 - z - The layer on which the button is displayed.
-- callback - The method called when the button is pressed. Syntax `self.method(:[METHOD_NAME])`
+- callback - The method called when the button is pressed. Syntax `:[METHOD_NAME]`
 
 Optional arguments are listed below. To access any of them, you must use the syntax `[argument]: [value]`
 - width, height - The width and height of the button.
