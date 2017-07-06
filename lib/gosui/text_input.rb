@@ -94,6 +94,8 @@ module Gosui
       if @selected
         @font.draw_rel(@value + '|', @x + @margin, @y + @height / 2, @z, 0, 0.5, 1, 1, B) if @blinker
         @font.draw_rel(@value, @x + @margin, @y + @height / 2, @z, 0, 0.5, 1, 1, B) if !@blinker
+      else
+        @font.draw_rel(@value, @x + @margin, @y + @height / 2, @z, 0, 0.5, 1, 1, B) if @value != ''
       end
     end
 
