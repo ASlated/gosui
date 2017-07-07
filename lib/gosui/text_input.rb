@@ -47,9 +47,9 @@ module Gosui
       shift = false
       @layout.each do |i|
         if @win.button_down?(i[:code])
-          reset_timer
           shift = true if i[:val] == 'shift'
           unless i[:down]
+            reset_timer
             case i[:val]
             when 'delete'
               @value.slice!(-1)
